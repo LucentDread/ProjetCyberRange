@@ -27,7 +27,7 @@ while True:
         filename = words[-1].lstrip()
 
         local_list = []
-        local_list = os.listdir('c:/python24')
+        local_list = os.listdir('c:/myfolder')
 
         liste_diff = Diff(listing, local_list)
 
