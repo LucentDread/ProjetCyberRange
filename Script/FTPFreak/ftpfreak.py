@@ -2,6 +2,7 @@
 
 import os
 from ftplib import FTP
+import time
 
 def Diff(listing, local_list):
     li_dif = [i for i in listing + local_list if i not in listing or i not in local_list]
@@ -31,10 +32,11 @@ while True:
         liste_diff = Diff(listing, local_list)
 
         # téléchargement fichier
-        for i in range(len(liste_diff)):
+        for i in liste_diff:
             local_filename = os.path.join(r"c:\myfolder", i)
             lf = open(local_filename, "wb")
-            ftp.retrbinary("RETR " + filename, lf.write, 8*1024)
+            ftp.retrbinary("RETR " + i, lf.write, 8*1024)
             lf.close()
 
         connection().quit()
+        time.sleep(30)
