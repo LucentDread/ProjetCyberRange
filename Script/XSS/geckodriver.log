@@ -1,0 +1,65 @@
+1553205606635	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.O4KMEN4c5HBk"
+1553205607199	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1553205607199	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+
+(firefox:11035): Gtk-WARNING **: 23:00:07.399: Theme parsing error: <data>:1:34: Expected ')' in color definition
+
+(firefox:11035): Gtk-WARNING **: 23:00:07.399: Theme parsing error: <data>:1:77: Expected ')' in color definition
+1553205608347	Marionette	INFO	Listening on port 46101
+1553205608442	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+1553206549907	Marionette	INFO	Stopped listening on port 46101
+1553206675680	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.9udyNMzA4fgP"
+*** You are running in headless mode.
+1553206675922	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1553206675922	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1553206676712	Marionette	INFO	Listening on port 34733
+1553206676784	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+1553207923855	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.3XLuTtdr668y"
+*** You are running in headless mode.
+1553207924072	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1553207924072	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1553207924847	Marionette	INFO	Listening on port 38791
+1553207924861	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
