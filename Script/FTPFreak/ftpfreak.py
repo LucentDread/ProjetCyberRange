@@ -37,6 +37,7 @@ while True:
             lf = open(local_filename, "wb")
             ftp.retrbinary("RETR " + i, lf.write, 8*1024)
             lf.close()
+            os.system('explorer.exe "c:\\myfolder\\'+local_filename+'"')
 
         connection().quit()
         time.sleep(30)
