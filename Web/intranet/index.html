@@ -19,6 +19,12 @@
           <br>
 
           <img class="ui fluid image" src="img/planning.png">
+          <br>
+          <div class="ui form">
+            <div class="ui input">
+              <input id="getSchedule" type="submit" value="Get your own schedule" class="ui blue button" >
+            </div>
+          </div>
 
         </div>
       </div>
@@ -42,5 +48,10 @@
     </div>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" stc="../semantic/semantic.min.js"></script>
+    <script type="text/javascript">
+      $("#getSchedule").on("click", function(){
+        $.get('file?file=xxxx/xxxx.xx')
+      });
+    </script>
   </body>
 </html>
