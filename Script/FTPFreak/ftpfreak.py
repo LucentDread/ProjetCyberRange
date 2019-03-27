@@ -24,7 +24,7 @@ while True:
         local_list = os.listdir("/home/theo/Images2")
         liste_diff = Diff(filenames, local_list)
         print(liste_diff)
-        # Download files that are on the ftp server and not on the machine
+        # Download files that are on the FTP server and not on the machine and save them on the machine
         for i in liste_diff:
             local_filename = os.path.join("/home/theo/Images2", i)
             lf = open(local_filename, "wb")
