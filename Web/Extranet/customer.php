@@ -16,7 +16,7 @@
   </div>
   <div class="ui two column grid" style="padding: 5px;">
     <div class="ten wide column">
-      <div class="ui segment" style="background: transparent; border: transparent;">
+      <div class="ui segment" style="background-color: transparent; border: transparent; box-shadow: none;">
         <form method="post" action="customer.php">
           <div class="ui form">
             <h2 class="ui centered header" style="color: white;">Customer area</h2>

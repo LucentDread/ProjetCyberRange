@@ -4,15 +4,18 @@ import os
 from ftplib import FTP
 import time
 
+# list comparison function
 def Diff(listing, local_list):
     li_dif = [i for i in listing + local_list if i not in listing or i not in local_list]
     return li_dif
 
 while True:
     try:
+        # FTP server connection
         ftp = FTP("localhost", "theo", "toort")
         print("Welcome: " + ftp.getwelcome())
         ftp.login("theo","toort")
+        # Create a list of all the files on the ftp server
         listing = []
         ftp.cwd("Images")
         ftp.retrlines('LIST', listing.append)
