@@ -50,7 +50,9 @@
     <script type="text/javascript" stc="../semantic/semantic.min.js"></script>
     <script type="text/javascript">
       $("#getSchedule").on("click", function(){
-        $.get('file?file=xxxx/xxxx.xx')
+        $.get('file?file=xxxx/xxxx.xx').success(function(data) {
+          alert(data);
+        });
       });
     </script>
   </body>
