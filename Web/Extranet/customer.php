@@ -17,28 +17,30 @@
   <div class="ui two column grid" style="padding: 5px;">
     <div class="ten wide column">
       <div class="ui segment" style="background: transparent; border: transparent;">
-        <div class="ui form" method="post" action="customer.php">
-          <h2 class="ui centered header" style="color: white;">Customer area</h2>
-          <h3 class="ui header" style="color: white;">Submit your file here</h3>
-          <div class="field">
+        <form method="post" action="customer.php">
+          <div class="ui form">
+            <h2 class="ui centered header" style="color: white;">Customer area</h2>
+            <h3 class="ui header" style="color: white;">Submit your file here</h3>
+            <div class="field">
+              <div class="ui input">
+                <input type="text" placeholder="Filename" name="filename">
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui input">
+                <textarea name="file_desc" placeholder="File description"></textarea>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui input">
+                <input type="file" id="file" name="myfile" accept="image/*, .pdf">
+              </div>
+            </div>
             <div class="ui input">
-              <input type="text" placeholder="Filename" name="filename">
+              <input type="submit" value="Send" class="ui blue button">
             </div>
           </div>
-          <div class="field">
-            <div class="ui input">
-              <textarea name="file_desc" placeholder="File description"></textarea>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui input">
-              <input type="file" id="file" name="file" accept="image/*, .pdf">
-            </div>
-          </div>
-          <div class="ui input">
-            <input type="submit" value="Send" class="ui blue button">
-          </div>
-        </div>
+        </form>
 
         <?php
 
@@ -48,55 +50,59 @@
           echo "Error connecting to the database.";
         } else {
 
-          $AfficherFormulaire=1;
-
-          if(isset($_POST['file'])){
-
-            if(empty($_POST['file'])){
-              echo "Please submit a file.";
-
-            } elseif(){
-
-              echo "Invalid file type.";
-
-            } else {
-              echo "Your file has been transmitted, you will be contacted by email as soon as the file has been processed.";
-
-              $AfficherFormulaire=0;
+          // File sending and error test
+          if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0)
+          {
+            // File size test
+            if ($_FILES['myfile']['size'] <= 50000000)
+            {
+              // Extension test
+              $fileinfo = pathinfo($_FILES['myfile']['name']);
+              $upload_extension = $fileinfo['extension'];
+              $allowed_extensions = array('jpg', 'jpeg', 'gif', 'png', 'pdf');
+              if (in_array($upload_extension, $allowed_extensions))
+              {
+                // File validation and permanent storage
+                move_uploaded_file($_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name']));
+                echo "Your file has been transmitted, you will be contacted by email as soon as the file has been processed.";
+              }
+              else {
+                echo "Invalid file type.";
+              }
+            }
+            else {
+              echo "Your file is too big, please submit a file smaller than 50MB.";
             }
           }
-        }
-        if($AfficherFormulaire==1){
-          ?>
-
-          <?php
-        }
+          else {
+            echo "Please submit a file.";
+          }
         ?>
 
+        </div>
       </div>
-    </div>
-    <div class="six wide column">
-      <div class="ui segment">
-        <div class="ui form">
-          <h2 class="ui centered header">Administration section</h2>
-          <div class="field">
-            <div class="ui input">
-              <input type="text" placeholder="Username" name="username">
+      <div class="six wide column">
+        <div class="ui segment">
+          <div class="ui form">
+            <h2 class="ui centered header">Administration section</h2>
+            <div class="field">
+              <div class="ui input">
+                <input type="text" placeholder="Username" name="username">
+              </div>
             </div>
-          </div>
-          <div class="field">
-            <div class="ui input">
-              <input type="password" placeholder="Password" name="password">
+            <div class="field">
+              <div class="ui input">
+                <input type="password" placeholder="Password" name="password">
+              </div>
             </div>
-          </div>
-          <div class="ui input">
-            <input type="submit" value="Log in" class="ui blue button">
+            <div class="ui input">
+              <input type="submit" value="Log in" class="ui blue button">
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script type="text/javascript" src="../js/jquery.min.js"></script>
-  <script type="text/javascript" src="../semantic/semantic.min.js"></script>
-</body>
-</html>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../semantic/semantic.min.js"></script>
+  </body>
+  </html>
