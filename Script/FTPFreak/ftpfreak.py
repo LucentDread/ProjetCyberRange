@@ -20,14 +20,17 @@ while True:
         ftp.cwd("Images")
         ftp.retrlines('LIST', listing.append)
         filenames = [x[-1].lstrip() for x in [x.split(None, 8) for x in listing]]
+        # Create a list of all the files on the machine
         local_list = os.listdir("/home/theo/Images2")
         liste_diff = Diff(filenames, local_list)
         print(liste_diff)
+        # Download files that are on the ftp server and not on the machine
         for i in liste_diff:
             local_filename = os.path.join("/home/theo/Images2", i)
             lf = open(local_filename, "wb")
             ftp.retrbinary("RETR " + i, lf.write, 8*1024)
             lf.close()
+            # open all new downloaded files
             os.system('explorer.exe "c:\\myfolder\\'+local_filename+'"')
         ftp.quit()
 
