@@ -1,8 +1,13 @@
 <?php
+//connect to mysqli
 $mysqli = new mysqli('127.0.0.1', 'root', 'toort', 'cyberrange');
+//fetch all opinions to display them later
 $opinions = $mysqli->query("SELECT * FROM opinion");
+//if the form is submited
 if(isset($_POST['opinion'])) {
+  //insert the opinion into the database
   $mysqli->query("INSERT INTO opinion(content) VALUES ('".$_POST['opinion']."')");
+  //refresh the page
   header("Location:opinion.php");
 }
 ?>
