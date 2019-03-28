@@ -1,14 +1,10 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 $mysqli = new mysqli('127.0.0.1', 'root', 'toort', 'cyberrange');
 $opinions = $mysqli->query("SELECT * FROM opinion");
 if(isset($_POST['opinion'])) {
   $mysqli->query("INSERT INTO opinion(content) VALUES ('".$_POST['opinion']."')");
   header("Location:opinion.php");
 }
-
 ?>
 <html lang="fr" dir="ltr">
 <head>
