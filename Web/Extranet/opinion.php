@@ -28,7 +28,7 @@ if(isset($_POST['opinion'])) {
   </div>
   <div class="ui two column grid" style="padding: 5px;">
     <div class="ten wide column">
-      <div class="ui segment" style="color:white !important;background-color: transparent; border: transparent;">
+      <div class="ui segment" style="color:white !important;background-color: transparent; border: transparent; box-shadow: none;">
         <?php
 
         while ($op = $opinions->fetch_assoc()) {

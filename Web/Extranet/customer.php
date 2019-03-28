@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="utf-8">
@@ -17,7 +16,7 @@
   <div class="ui two column grid" style="padding: 5px;">
     <div class="ten wide column">
       <div class="ui segment" style="background-color: transparent; border: transparent; box-shadow: none;">
-        <form method="post" action="customer.php">
+        <form method="post" enctype="multipart/form-data" action="customer.php">
           <div class="ui form">
             <h2 class="ui centered header" style="color: white;">Customer area</h2>
             <h3 class="ui header" style="color: white;">Submit your file here</h3>
@@ -33,7 +32,7 @@
             </div>
             <div class="field">
               <div class="ui input">
-                <input type="file" id="file" name="myfile" accept="image/*, .pdf">
+                <input type="file" name="myfile" accept="image/*, .pdf">
               </div>
             </div>
             <div class="ui input">
@@ -41,68 +40,76 @@
             </div>
           </div>
         </form>
-
-        <?php
-
-        $mysqli = mysqli_connect("localhost", "root", "", "");
-
-        if(!$mysqli){
-          echo "Error connecting to the database.";
-        } else {
-
-          // File sending and error test
-          if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0)
-          {
-            // File size test
-            if ($_FILES['myfile']['size'] <= 50000000)
-            {
-              // Extension test
-              $fileinfo = pathinfo($_FILES['myfile']['name']);
-              $upload_extension = $fileinfo['extension'];
-              $allowed_extensions = array('jpg', 'jpeg', 'gif', 'png', 'pdf');
-              if (in_array($upload_extension, $allowed_extensions))
-              {
-                // File validation and permanent storage
-                move_uploaded_file($_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name']));
-                echo "Your file has been transmitted, you will be contacted by email as soon as the file has been processed.";
-              }
-              else {
-                echo "Invalid file type.";
-              }
-            }
-            else {
-              echo "Your file is too big, please submit a file smaller than 50MB.";
-            }
-          }
-          else {
-            echo "Please submit a file.";
-          }
-        ?>
-
-        </div>
       </div>
-      <div class="six wide column">
-        <div class="ui segment">
-          <div class="ui form">
-            <h2 class="ui centered header">Administration section</h2>
-            <div class="field">
-              <div class="ui input">
-                <input type="text" placeholder="Username" name="username">
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui input">
-                <input type="password" placeholder="Password" name="password">
-              </div>
-            </div>
+    </div>
+
+    <?php
+    // File sending and error test
+    if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0)
+    {
+      // File size test
+      if ($_FILES['myfile']['size'] <= 50000000)
+      {
+        // Extension test
+        $fileinfo = pathinfo($_FILES['myfile']['name']);
+        $upload_extension = $fileinfo['extension'];
+        $allowed_extensions = array('jpg', 'jpeg', 'gif', 'png', 'pdf');
+        if (in_array($upload_extension, $allowed_extensions))
+        {
+          // File validation and permanent storage
+          move_uploaded_file($_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name']));
+          echo <<<EOF
+          <div class="ui positive message">
+          Your file has been transmitted, you will be contacted by email as soon as the file has been processed.
+          </div>
+EOF;
+        }
+        else {
+          echo <<<EOF
+          <div class="ui negative message">
+          Invalid file type.
+          </div>
+EOF;
+        }
+      }
+      else {
+        echo <<<EOF
+        <div class="ui negative message">
+        Your file is too big, please submit a file smaller than 50MB.
+        </div>
+EOF;
+    }
+    else {
+      echo <<<EOF
+      <div class="ui negative message">
+      Please submit a file.
+      </div>
+EOF;
+    }
+    ?>
+
+    <div class="six wide column">
+      <div class="ui segment">
+        <div class="ui form">
+          <h2 class="ui centered header">Administration section</h2>
+          <div class="field">
             <div class="ui input">
-              <input type="submit" value="Log in" class="ui blue button">
+              <input type="text" placeholder="Username" name="username">
             </div>
+          </div>
+          <div class="field">
+            <div class="ui input">
+              <input type="password" placeholder="Password" name="password">
+            </div>
+          </div>
+          <div class="ui input">
+            <input type="submit" value="Log in" class="ui blue button">
           </div>
         </div>
       </div>
     </div>
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script type="text/javascript" src="../semantic/semantic.min.js"></script>
-  </body>
-  </html>
+  </div>
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../semantic/semantic.min.js"></script>
+</body>
+</html>
