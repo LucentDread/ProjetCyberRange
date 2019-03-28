@@ -41,46 +41,46 @@
             </div>
           </div>
         </form>
+      </div>
 
-        <?php
+      <?php
 
-        $mysqli = mysqli_connect("localhost", "root", "", "");
+      $mysqli = mysqli_connect("localhost", "root", "", "");
 
-        if(!$mysqli){
-          echo "Error connecting to the database.";
-        } else {
+      if(!$mysqli){
+        echo "Error connecting to the database.";
+      } else {
 
-          // File sending and error test
-          if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0)
+        // File sending and error test
+        if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0)
+        {
+          // File size test
+          if ($_FILES['myfile']['size'] <= 50000000)
           {
-            // File size test
-            if ($_FILES['myfile']['size'] <= 50000000)
+            // Extension test
+            $fileinfo = pathinfo($_FILES['myfile']['name']);
+            $upload_extension = $fileinfo['extension'];
+            $allowed_extensions = array('jpg', 'jpeg', 'gif', 'png', 'pdf');
+            if (in_array($upload_extension, $allowed_extensions))
             {
-              // Extension test
-              $fileinfo = pathinfo($_FILES['myfile']['name']);
-              $upload_extension = $fileinfo['extension'];
-              $allowed_extensions = array('jpg', 'jpeg', 'gif', 'png', 'pdf');
-              if (in_array($upload_extension, $allowed_extensions))
-              {
-                // File validation and permanent storage
-                move_uploaded_file($_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name']));
-                echo "Your file has been transmitted, you will be contacted by email as soon as the file has been processed.";
-              }
-              else {
-                echo "Invalid file type.";
-              }
+              // File validation and permanent storage
+              move_uploaded_file($_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name']));
+              echo "Your file has been transmitted, you will be contacted by email as soon as the file has been processed.";
             }
             else {
-              echo "Your file is too big, please submit a file smaller than 50MB.";
+              echo "Invalid file type.";
             }
           }
           else {
-            echo "Please submit a file.";
+            echo "Your file is too big, please submit a file smaller than 50MB.";
           }
-        ?>
-
-        </div>
+        }
+        else {
+          echo "Please submit a file.";
+        }
+      ?>
       </div>
+      
       <div class="six wide column">
         <div class="ui segment">
           <div class="ui form">
