@@ -38,57 +38,37 @@
             <div class="ui input">
               <input type="submit" value="Send" class="ui blue button">
             </div>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <?php
-    // ----- SERVER UPLOAD -----
+                <?php
     // File sending and error test
-    if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0)
-    {
+    if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0) {
       // File size test
-      if ($_FILES['myfile']['size'] <= 50000000)
-      {
+      if ($_FILES['myfile']['size'] <= 50000000) {
         // Extension test
         $fileinfo = pathinfo($_FILES['myfile']['name']);
         $upload_extension = $fileinfo['extension'];
         $allowed_extensions = array('jpg', 'jpeg', 'gif', 'png', 'pdf');
-        if (in_array($upload_extension, $allowed_extensions))
-        {
+        if (in_array($upload_extension, $allowed_extensions)) {
           // File validation and permanent storage
           move_uploaded_file($_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name']));
-          echo <<<EOF
-          <div class="ui positive message">
-          Your file has been transmitted, you will be contacted by email as soon as the file has been processed.
-          </div>
-EOF;
-          // FTP variable
-          $source_file= 'uploads/' . basename($_FILES['myfile']['name'];
+          $action = "positive";
+          $message = "Your file has been transmitted, you will be contacted by email as soon as the file has been processed.";
+        } else {
+          $action = "negative";
+          $message = "Invalid file type.";
         }
-        else {
-          echo <<<EOF
-          <div class="ui negative message">
-          Invalid file type.
-          </div>
-EOF;
-        }
+      } else {
+        $action = "negative";
+        $message = "Your file is too big, please submit a file smaller than 50MB.";
       }
-      else {
-        echo <<<EOF
-        <div class="ui negative message">
-        Your file is too big, please submit a file smaller than 50MB.
-        </div>
+    } else {
+      $action = "hidden";
+      $message = "Please submit a file.";
+    }
+    echo <<<EOF
+      <div class="ui $action message">
+      $message
+      </div>
 EOF;
-      }
-      else {
-        echo <<<EOF
-        <div class="ui negative message">
-        Please submit a file.
-        </div>
-EOF;
-      }
 
       // ----- FTP UPLOAD -----
       // Setting up a basic connection
@@ -148,7 +128,33 @@ EOF;
         </div>
       </div>
     </div>
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script type="text/javascript" src="../semantic/semantic.min.js"></script>
+  </div>
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../semantic/semantic.min.js"></script>
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  if(isset($_GET['username']) && isset($_GET['password']) || isset($_FILES['myfile'])) {
+    if(!isset($_FILES['myfile'])) {
+    $username = $_GET['username'];
+    $password = $_GET['password'];
+    $mysqli = new mysqli("127.0.0.1", "root", "toort", "cyberrange");
+    $query = $mysqli->query("SELECT * FROM users WHERE username='".$username."' and password='".$password."'");
+    if($query->num_rows == 0) {
+      echo <<<EOF
+      <script>
+      $(document).ready(function() {
+        alert("Bad credentials");
+        history.back();
+        });
+        </script>
+EOF;
+      }
+    }
+    } else {
+      header("Location: index.html");
+    }
+    ?>
   </body>
   </html>
