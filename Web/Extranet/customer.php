@@ -44,6 +44,7 @@
     </div>
 
     <?php
+    // ----- SERVER UPLOAD -----
     // File sending and error test
     if (isset($_FILES['myfile']) AND $_FILES['myfile']['error'] == 0)
     {
@@ -63,6 +64,8 @@
           Your file has been transmitted, you will be contacted by email as soon as the file has been processed.
           </div>
 EOF;
+          // FTP variable
+          $source_file=$_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name'];
         }
         else {
           echo <<<EOF
@@ -78,38 +81,74 @@ EOF;
         Your file is too big, please submit a file smaller than 50MB.
         </div>
 EOF;
-    }
-    else {
-      echo <<<EOF
-      <div class="ui negative message">
-      Please submit a file.
-      </div>
+      }
+      else {
+        echo <<<EOF
+        <div class="ui negative message">
+        Please submit a file.
+        </div>
 EOF;
-    }
+      }
+
+      // ----- FTP UPLOAD -----
+      // Setting up a basic connection
+      $ftp_server = "grosftp.com";
+      $conn_id = ftp_connect($ftp_server);
+
+      // Identification with a username and password
+      $ftp_user_name = "willywonka";
+      $ftp_user_pass = "comeandlickmycandy";
+      $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+      ftp_pasv($conn_id, true);
+
+      // Checking the connection
+      if ((!$conn_id) || (!$login_result)) {
+        echo "FTP connection failed!";
+        echo "Attempted to connect to $ftp_server for user $ftp_user_name";
+        exit;
+      } else {
+        echo "Connected to $ftp_server, for user $ftp_user_name";
+      }
+
+      // Uploading a file
+      $destination_file= "destination";
+      $upload = ftp_put($conn_id, $destination_file, $source_file, FTP_BINARY);
+
+      // Checking the status of the upload
+      if (!$upload) {
+        echo "FTP upload failed!";
+      } else {
+        echo "File $source_file uploaded to $ftp_server as $destination_file";
+      }
+
+      // Fermeture du flux FTP
+      ftp_close($conn_id);
+
     ?>
 
-    <div class="six wide column">
-      <div class="ui segment">
-        <div class="ui form">
-          <h2 class="ui centered header">Administration section</h2>
-          <div class="field">
-            <div class="ui input">
-              <input type="text" placeholder="Username" name="username">
+
+      <div class="six wide column">
+        <div class="ui segment">
+          <div class="ui form">
+            <h2 class="ui centered header">Administration section</h2>
+            <div class="field">
+              <div class="ui input">
+                <input type="text" placeholder="Username" name="username">
+              </div>
             </div>
-          </div>
-          <div class="field">
-            <div class="ui input">
-              <input type="password" placeholder="Password" name="password">
+            <div class="field">
+              <div class="ui input">
+                <input type="password" placeholder="Password" name="password">
+              </div>
             </div>
-          </div>
-          <div class="ui input">
-            <input type="submit" value="Log in" class="ui blue button">
+            <div class="ui input">
+              <input type="submit" value="Log in" class="ui blue button">
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script type="text/javascript" src="../js/jquery.min.js"></script>
-  <script type="text/javascript" src="../semantic/semantic.min.js"></script>
-</body>
-</html>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../semantic/semantic.min.js"></script>
+  </body>
+  </html>
