@@ -65,7 +65,7 @@
           </div>
 EOF;
           // FTP variable
-          $source_file=$_FILES['myfile']['tmp_name'], 'uploads/' . basename($_FILES['myfile']['name'];
+          $source_file= 'uploads/' . basename($_FILES['myfile']['name'];
         }
         else {
           echo <<<EOF
