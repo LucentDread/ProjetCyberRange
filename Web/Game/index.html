@@ -3,8 +3,33 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="../semantic/semantic.min.css">
-
+  <link rel="stylesheet" href="css/chartist.min.css">
   <title>Résultats Fleury Michou</title>
+  <style>
+      .ct-line.ct-threshold-above, .ct-point.ct-threshold-above, .ct-bar.ct-threshold-above {
+        stroke: #59922b;
+      }
+
+      .ct-line.ct-threshold-below, .ct-point.ct-threshold-below, .ct-bar.ct-threshold-below {
+        stroke: #f05b4f;
+      }
+
+      .ct-area.ct-threshold-above {
+        fill: #59922b;
+      }
+
+      .ct-area.ct-threshold-below {
+        fill: #f05b4f;
+      }
+
+      .ct-grids {
+        display: none;
+      }
+
+      .ct-labels {
+        display: none;
+      }
+    </style>
 </head>
 <body style="margin: 10px;">
   <center>
@@ -18,11 +43,7 @@
             <h3>Cours de l'action</h3>
           </div>
           <div style="font-size:22px;" class="ui center aligned bottom attached segment">
-            Valeur de l'action :
-            2 M€
-            <hr>
-            Dernier changement :
-            <span style="color:red">- 5 k€</span>
+            <div class="ct-chart ct-perfect-fourth" style="height:440px;"></div>
           </div>
         </div>
       </div>
@@ -61,5 +82,72 @@
     </div>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" stc="../semantic/semantic.min.js"></script>
+    <script src="js/chartist.min.js"></script>
+    <script src="js/chartist-plugin-threshold.min.js"></script>
+    <script src="js/chartist-plugin-pointlabels.min.js"></script>
+    <script>
+          
+          function update(chart) {
+
+         
+          $.post(":8080/update")
+          .done(function( data ) {
+            eval("var obj = {series: [[" + data + "]]}");
+            chart.update(obj,{
+              showArea: true,
+              axisY: {
+                onlyInteger: true
+              },
+              plugins: [
+                Chartist.plugins.ctThreshold({
+                  threshold: 30
+                }),
+                Chartist.plugins.ctPointLabels({
+                  textAnchor: "left",
+                  labelOffset: {
+                    x: 5,
+                    y: -5
+                  },
+                  labelInterpolationFnc: function(value) {return 'M$' + value.toFixed(2)}
+                })
+              ]
+            });
+          });
+        }
+
+        $(document).ready(function() {
+
+          var chart;
+
+          let data;
+
+          chart = new Chartist.Line('.ct-chart', {
+            series: [
+            [60, 40, 39, 25, 7, 0.000001]
+            ]
+          }, {
+            showArea: true,
+            axisY: {
+              onlyInteger: true
+            },
+            plugins: [
+            Chartist.plugins.ctThreshold({
+              threshold: 30
+            }),
+            Chartist.plugins.ctPointLabels({
+              textAnchor: "left",
+              labelOffset: {
+                x: 5,
+                y: -5
+              },
+              labelInterpolationFnc: function(value) {return 'M$' + value.toFixed(2)}
+            })
+            ]
+          });
+
+          //update(chart);
+          //update_timer = setInterval(function(){ $("#update").toggleClass("blink orange green").text("Updating");update(chart); }, 30000);
+        })
+      </script>
   </body>
   </html>
