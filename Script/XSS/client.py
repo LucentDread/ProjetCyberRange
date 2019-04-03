@@ -8,5 +8,8 @@ drv.get("http://localhost/xss.html")
 drv.add_cookie({"name":"user","value":"WillieWonka"})
 drv.add_cookie({"name":"passwd","value":"Il0v3C4ndys!"})
 while True:
-    drv.get("http://localhost/xss.html")
-    time.sleep(10)
+	frun = open('DoNotTouch.txt','r')
+    run = frun.read()
+    if run == '1':
+    	drv.get("http://localhost/xss.html")
+   		time.sleep(10)
