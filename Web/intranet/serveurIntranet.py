@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import datetime
 from http.server import BaseHTTPRequestHandler,HTTPServer
 from os import curdir, sep, path, system
 
@@ -12,7 +13,7 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
         #Log file
 		f = open('logs.txt','a')
-		#f.write(self)
+		f.write("[" + str(datetime.datetime.now()) + "] " + self.path + " requested by " + self.address_string() + "\n")
 		if self.path=="/":
 			self.path="/index.html"
         
