@@ -12,9 +12,9 @@ class myHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
         #Log file
 		f = open('logs.txt','a')
-		f.write(self)
+		#f.write(self)
 		if self.path=="/":
-			self.path="/test.html"
+			self.path="/index.html"
         
         #Check for a value : path to a file
 		p = self.path
@@ -61,10 +61,7 @@ class myHandler(BaseHTTPRequestHandler):
 					self.end_headers()
 					system('cat '+curdir + sep + self.path)
                     #html need utf-8 encoding
-					if mimetype == 'text/html':
-					    self.wfile.write(f.read().encode('utf8'))
-					else :
-					    self.wfile.write(f.read())
+					self.wfile.write(f.read())
 					f.close()
 				else:
 					self.send_error(404,'File Not Found: %s' % self.path)
