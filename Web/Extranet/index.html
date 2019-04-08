@@ -2,67 +2,89 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>Fleury Michou</title>
+  <title>Hariba</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
   <link rel="stylesheet" href="../semantic/semantic.min.css">
 </head>
-<body style="background-image:url('img/bg_default_nb.jpg');">
-  <img class="ui image" src="https://semantic-ui.com/images/wireframe/image.png" alt="Ici la bannière" style="width:100%;border:1px solid black;height:100px;">
+<body style="background-image:url('img/background.jpg');background-size:cover;background-attachment:fixed;">
+  <img class="ui image" src="img/banner.jpg" style="width:100%;">
   <div class="ui huge menu" style="margin-top:0;">
-    <a href="#" class="active item">Accueil</a>
-    <a href="team.html" class="item">L'Équipe</a>
+    <a href="index.html" class="active item">Home</a>
+    <a href="team.html" class="item">Team</a>
     <a href="news.html" class="item">News</a>
-    <a href="opinion.html" class="item">Avis</a>
+    <a href="opinion.php" class="item">Opinion</a>
   </div>
   <div class="ui two column grid" style="padding: 5px;">
     <div class="ten wide column">
-      <div class="ui segment">
-        <img class="ui centered image" src="https://semantic-ui.com/images/wireframe/image.png" alt="Ici la pub" style="width:600px;height:400px;">
+      <div class="ui segment" style="background-color: transparent; border: transparent; box-shadow: none; color: white;">
         <br>
-        <img class="ui wireframe image" src="https://semantic-ui.com/images/wireframe/short-paragraph.png">
+        <h1>Hariba ! Hariba !</h1>
+        <h3>Welcome to the site of your favorite sweets, here you will find all the information you need about our delicious candies!</h3>
       </div>
     </div>
     <div class="six wide column">
       <div class="ui segments">
         <div class="ui top attached segment">
           <div class="ui form">
-            <h2 class="ui centered header">Espace client</h2>
+            <h2 class="ui centered header">Customer area</h2>
             <div class="field">
               <div class="ui input">
-                <input type="text" placeholder="Nom d'utilisateur" name="username">
+                <input type="text" placeholder="Username" name="username">
               </div>
             </div>
             <div class="field">
               <div class="ui input">
-                <input type="password" placeholder="Mot de passe" name="password">
+                <input type="password" placeholder="Password" name="password">
               </div>
             </div>
             <div class="ui input">
-              <input type="submit" value="Connexion" class="ui blue button">
+              <input type="submit" value="Log in" class="ui blue button">
             </div>
           </div>
         </div>
         <div class="ui bottom attached segment">
+          <form action="admin.php" method="POST">
           <div class="ui form">
-            <h2 class="ui centered header">Section d'administration</h2>
+            <h2 class="ui centered header">Administration section</h2>
             <div class="field">
               <div class="ui input">
-                <input type="text" placeholder="Nom d'utilisateur" name="username">
+                <input type="text" placeholder="Username" name="username">
               </div>
             </div>
             <div class="field">
               <div class="ui input">
-                <input type="password" placeholder="Mot de passe" name="password">
+                <input type="password" placeholder="Password" name="password">
               </div>
             </div>
             <div class="ui input">
-              <input type="submit" value="Connexion" class="ui blue button">
+              <input type="submit" value="Log in" class="ui blue button">
             </div>
           </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="ui basic modal">
+    <div class="image content">
+      <img class="ui centered fluid image" src="img/cosgb.jpg" style="position: relative; height: 40%;">
+    </div>
+    <div class="actions">
+      <div class="ui red basic cancel inverted button" style="position: absolute; top: 5%; right: 3%;">
+        <i class="remove icon"></i>
+        Close
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript" src="../js/jquery.min.js"></script>
   <script type="text/javascript" src="../semantic/semantic.min.js"></script>
+  <script>
+    //Show the add
+  $(document).ready(function() {
+    $('.ui.basic.modal').modal('show');
+  });
+  </script>
 </body>
 </html>

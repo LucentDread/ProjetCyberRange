@@ -14,11 +14,17 @@
     <div class="ui three column grid">
       <div class="ten wide column">
         <div class="ui segment">
-          <h2 class="ui header">Planning des employés</h2>
+          <h2 class="ui header">Employee scheduling</h2>
           <hr>
           <br>
 
-          <img class="ui fluid image" src="../images/planning.png">
+          <img class="ui fluid image" src="img/planning.png">
+          <br>
+          <div class="ui form">
+            <div class="ui input">
+              <input id="getSchedule" type="submit" value="Get your own schedule" class="ui blue button" >
+            </div>
+          </div>
 
         </div>
       </div>
@@ -27,20 +33,27 @@
         <div class="ui segment">
           <h2 class="ui header">Newsletter</h2>
           <hr>
-          Des travaux auront lieu au 4e étage à partir de mardi, l'accès à cet étage est strictement interdit durant les travaux
+          Work will take place on the 4th floor from Tuesday, access to this floor is strictly prohibited during the work
           <hr>
-          L'ensemble de l'entreprise souhaite une bonne retraite à Gérard, un pot de départ est prévu vendredi soir en salle de réunion
+          The whole company wishes a good retirement to Gerard, a retirement party is planned Friday evening in meeting room
           <hr>
-          Une journée de formation sur le thème de la sécurité informatique en entreprise aura lieu jeudi, au vu des résultats d'une étude des comportements au sein de l'entreprise, tous les employés sont priés de participer à cette formation
+          A day of training on the topic of computer security in business will take place Thursday, in view of the results of a study of behaviors within the company, all employees are requested to participate in this training
           <hr>
-          RAPPEL : le chat interne de l'entreprise est reservé aux communications relatives au travail uniquement, partager des vidéos de chats ne fait pas parti des tâches qu'il est demandé aux employés de réaliser
+          REMINDER: The company's internal chat is for work-only communications, sharing cat videos is not among the tasks that employees are asked to do
           <hr>
-          Nous félicitons tous les employés pour les résultats du dernier semestre, nous sommes heureux de constater que les rumeurs (fausses et n'émanant pas de l'administration) d'une possible vague de licenciement n'ont pas entachés vos capacités de travail
+          We congratulate all employees for the results of the last semester, we are pleased to note that the rumors (false and not emanating from the administration) of a possible wave of dismissal did not taint your ability to work
 
           </div>
         </div>
     </div>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" stc="../semantic/semantic.min.js"></script>
+    <script type="text/javascript">
+      $("#getSchedule").on("click", function(){
+        $.get('file?file=xxxx/xxxx.xx').success(function(data) {
+          alert(data);
+        });
+      });
+    </script>
   </body>
 </html>
