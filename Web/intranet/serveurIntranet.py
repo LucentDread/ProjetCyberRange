@@ -1,8 +1,9 @@
 #!/usr/bin/python
+import datetime
 from http.server import BaseHTTPRequestHandler,HTTPServer
 from os import curdir, sep, path, system
 
-PORT_NUMBER = 8080
+PORT_NUMBER = 80
 
 #This class will handles any incoming request from
 #the browser 
@@ -11,8 +12,10 @@ class myHandler(BaseHTTPRequestHandler):
 	#Handler for the GET requests
 	def do_GET(self):
         #Log file
-		f = open('logs.txt','a')
-		f.write(self)
+		f = open('/root/intranet/logs.txt','a')
+		f.write("["+ str(datetime.datetime.now()) + "]" + self.path + "requested by " + self.address_string() + "\n")
+        
+        #basic path
 		if self.path=="/":
 			self.path="/test.html"
         
@@ -26,53 +29,66 @@ class myHandler(BaseHTTPRequestHandler):
 					self.path = path2
 
 		try:
+            #if the path is a directory
+            if(os.path.isdir(self.path)):
+                self.send_response(200)
+                self.send_header('Content-type','text/plain')
+                self.end_headers()
+                items = os.listdir()
+                text = ''
+                for i in items:
+                    text = text + i + '\n'
+                self.wfile.write(text)
+                
+            #if the path is a file
+            elif(os.path.isfile(self.path)):
 			#Check the file extension required and
 			#set the right mime type
 
-			sendReply = False
-			if self.path.endswith(".html"):
-				mimetype='text/html'
-				sendReply = True
-			if self.path.endswith(".jpg"):
-				mimetype='image/jpg'
-				sendReply = True
-			if self.path.endswith(".png"):
-				mimetype='image/png'
-				sendReply = True
-			if self.path.endswith(".gif"):
-				mimetype='image/gif'
-				sendReply = True
-			if self.path.endswith(".pdf"):
-				mimetype='application/pdf'
-				sendReply = True
-			if self.path.endswith(".js"):
-				mimetype='application/javascript'
-				sendReply = True
-			if self.path.endswith(".css"):
-				mimetype='text/css'
-				sendReply = True
+                sendReply = False
+                if self.path.endswith(".txt"):
+                    mimetype='text/plain'
+                    sendReply = True
+                if self.path.endswith(".html"):
+                    mimetype='text/html'
+                    sendReply = True
+                if self.path.endswith(".jpg"):
+                    mimetype='image/jpg'
+                    sendReply = True
+                if self.path.endswith(".png"):
+                    mimetype='image/png'
+                    sendReply = True
+                if self.path.endswith(".gif"):
+                    mimetype='image/gif'
+                    sendReply = True
+                if self.path.endswith(".pdf"):
+                    mimetype='application/pdf'
+                    sendReply = True
+                if self.path.endswith(".js"):
+                    mimetype='application/javascript'
+                    sendReply = True
+                if self.path.endswith(".css"):
+                    mimetype='text/css'
+                    sendReply = True
 
-			if sendReply == True:
-				#Open the static file requested and send it
-				if path.exists(curdir + sep + self.path) :
-					f = open(curdir + sep + self.path, 'rb')
-					self.send_response(200)
-					self.send_header('Content-type',mimetype)
-					self.end_headers()
-					system('cat '+curdir + sep + self.path)
-                    #html need utf-8 encoding
-					if mimetype == 'text/html':
-					    self.wfile.write(f.read().encode('utf8'))
-					else :
-					    self.wfile.write(f.read())
-					f.close()
-				else:
-					self.send_error(404,'File Not Found: %s' % self.path)
-			else:
-				self.send_error(404,'File Not Found: %s' % self.path)
-			return
+                if sendReply == True:
+                    #Open the static file requested and send it
+                    if path.exists("root/intranet" + self.path) :
+                        f = open("root/intranet" + self.path, 'rb')
+                        self.send_response(200)
+                        self.send_header('Content-type',mimetype)
+                        self.end_headers()
+                        self.wfile.write(f.read())
+                        f.close()
+                    else:
+                        self.send_error(404,'File Not Found: %s' % self.path)
+                else:
+                    self.send_error(404,'File Not Found: %s' % self.path)
+                return
 
-
+            else: 
+                self.send_error(404,'File Not Found: %s' % self.path)
+                
 		except IOError:
 			self.send_error(404,'File Not Found: %s' % self.path)
 
